@@ -1,26 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import RegistrationPage from "./pages/RegistrationPage";
-import { Global, css } from "@emotion/react";
-
-const GlobalStyles = () => (
-  <Global
-    styles={css`
-      html,
-      body,
-      #root {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-    `}
-  />
-);
+import SignUpPage from "./pages/SignUpPage";
+import GlobalStyles from "./styles/GlobalStyles";
 
 function App() {
   return (
@@ -29,7 +9,7 @@ function App() {
 
       <Router>
         <Routes>
-          <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
         </Routes>
       </Router>
     </div>
