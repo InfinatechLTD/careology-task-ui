@@ -2,15 +2,16 @@ import React from "react";
 import { Form, Input, Button, Typography } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { SignUpFormContainer } from "./SignUpForm.styles";
-import useSignUpForm, { SignUpFormValues } from "./useSignUpForm";
-import { Link } from "react-router-dom";
+import useSignUpForm from "./useSignUpForm";
 import { GreenLink } from "../../Common/Link";
+import { SignUpFormValues } from "../../../models/auth";
 
 const { Title, Text } = Typography;
 
 const SignUpForm: React.FC = () => {
   const [form] = Form.useForm<SignUpFormValues>();
-  const { onFinish, validatePasswordConfirmation } = useSignUpForm();
+  const { onFinish, validatePasswordConfirmation, isLoading, error } =
+    useSignUpForm();
 
   return (
     <SignUpFormContainer>
@@ -33,17 +34,15 @@ const SignUpForm: React.FC = () => {
             { type: "email", message: "Please enter a valid email" },
           ]}
         >
-          <Input placeholder="yours@example.com" />
+          <Input placeholder="yours@example.com" defaultValue="test@test.com" />
         </Form.Item>
-
         <Form.Item
           name="username"
           label="Enter your user name"
           rules={[{ required: true, message: "Please enter your user name" }]}
         >
-          <Input placeholder="task master" />
+          <Input placeholder="task master" defaultValue="tester" />
         </Form.Item>
-
         <Form.Item
           name="password"
           label="Enter your password"
@@ -54,11 +53,11 @@ const SignUpForm: React.FC = () => {
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
+            defaultValue="111111"
           />
         </Form.Item>
-
         <Form.Item
-          name="confirmPassword"
+          name="confirmationPassword"
           label="Confirm your password"
           dependencies={["password"]}
           rules={[
@@ -71,11 +70,20 @@ const SignUpForm: React.FC = () => {
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
+            defaultValue="111111"
           />
         </Form.Item>
-
+        {error && <p style={{ color: "red" }}>An error occurred</p>}{" "}
+        {/* Display error */}
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large" block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+            loading={isLoading}
+            disabled={isLoading}
+          >
             Register
           </Button>
         </Form.Item>

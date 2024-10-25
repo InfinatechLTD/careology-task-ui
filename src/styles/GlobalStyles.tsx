@@ -55,11 +55,6 @@ const GlobalStyles = () => (
         margin-bottom: 16px;
         margin-top: 0px;
       }
-
-      button.ant-btn {
-        background-color: var(--green-color);
-      }
-
     `}
   />
 );

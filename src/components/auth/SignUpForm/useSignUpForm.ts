@@ -1,15 +1,30 @@
 import { RuleObject } from "rc-field-form/lib/interface"; // For custom validator typing
-
-export interface SignUpFormValues {
-  email: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
-}
+import { SignUpFormValues } from "../../../models/auth";
+import { useRegisterUserMutation } from "../../../features/auth/authApi";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useSignUpForm = () => {
-  const onFinish = (values: SignUpFormValues) => {
-    console.log("Form Values: ", values);
+  const [registerUser, { isLoading, error, isSuccess }] =
+    useRegisterUserMutation();
+
+  const navigate = useNavigate(); // React-router navigation hook
+
+  // Handle success and navigate to login page
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("User has been registered successfully!");
+      navigate("/login"); // Navigate to login page
+    }
+  }, [isSuccess, navigate]);
+
+  const onFinish = async (values: SignUpFormValues) => {
+    try {
+      console.log(values);
+      await registerUser(values).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Password confirmation validation rule
@@ -26,14 +41,12 @@ const useSignUpForm = () => {
     },
   });
 
-  const handleRegistrationClick = () => {
-    console.log("clicked");
-  };
-
   return {
     onFinish,
-    handleRegistrationClick,
     validatePasswordConfirmation,
+    isLoading,
+    error,
+    isSuccess,
   };
 };
 
