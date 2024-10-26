@@ -8,4 +8,5 @@ export interface SignUpFormValues {
 export interface SignInFormValues {
   email: string;
   password: string;
+  rememberMe: boolean;
 }

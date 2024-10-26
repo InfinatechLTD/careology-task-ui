@@ -25,10 +25,15 @@ const useSignInForm = () => {
     }
   };
 
+  const handleForgotPassword = () => {
+    alert("Not implemented yet! Sorry :)");
+  };
+
   // Password confirmation validation rule
 
   return {
     onFinish,
+    handleForgotPassword,
     isLoading,
     error,
     isSuccess,

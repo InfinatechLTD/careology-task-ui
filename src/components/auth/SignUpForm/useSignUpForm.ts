@@ -14,7 +14,7 @@ const useSignUpForm = () => {
   useEffect(() => {
     if (isSuccess) {
       console.log("User has been registered successfully!");
-      navigate("/login"); // Navigate to login page
+      navigate("/sign-in"); // Navigate to login page
     }
   }, [isSuccess, navigate]);
 
