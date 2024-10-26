@@ -3,6 +3,7 @@ import SignUpPage from "./pages/SignUpPage";
 import GlobalStyles from "./styles/GlobalStyles";
 import { ConfigProvider } from "antd";
 import SignInPage from "./pages/SignInPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       >
         <Router>
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
           </Routes>
