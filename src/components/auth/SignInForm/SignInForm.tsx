@@ -1,27 +1,26 @@
 import React from "react";
 import { Form, Input, Button, Typography } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { SignUpFormContainer } from "./SignUpForm.styles";
-import useSignUpForm from "./useSignUpForm";
+import { SignInFormContainer } from "./SignInForm.styles";
 import { GreenLink } from "../../Common/Link";
-import { SignUpFormValues } from "../../../models/auth";
+import { SignInFormValues } from "../../../models/auth";
+import useSignInForm from "./useSignInForm";
 
 const { Title, Text } = Typography;
 
-const SignUpForm: React.FC = () => {
-  const [form] = Form.useForm<SignUpFormValues>();
-  const { onFinish, validatePasswordConfirmation, isLoading, error } =
-    useSignUpForm();
+const SignInForm: React.FC = () => {
+  const [form] = Form.useForm<SignInFormValues>();
+  const { onFinish, isLoading, error } = useSignInForm();
 
   return (
-    <SignUpFormContainer>
+    <SignInFormContainer>
       <Title level={3}>Welcome !</Title>
       <Title level={2}>Sign up to</Title>
       <Text>get things done &#10024;</Text>
 
-      <Form<SignUpFormValues>
+      <Form<SignInFormValues>
         form={form}
-        name="register"
+        name="login"
         layout="vertical"
         onFinish={onFinish}
         style={{ marginTop: "20px" }}
@@ -37,36 +36,12 @@ const SignUpForm: React.FC = () => {
           <Input placeholder="yours@example.com" defaultValue="test@test.com" />
         </Form.Item>
         <Form.Item
-          name="username"
-          label="Enter your user name"
-          rules={[{ required: true, message: "Please enter your user name" }]}
-        >
-          <Input placeholder="task master" defaultValue="tester" />
-        </Form.Item>
-        <Form.Item
           name="password"
           label="Enter your password"
           rules={[{ required: true, message: "Please enter your password" }]}
         >
           <Input.Password
             placeholder="Enter your password"
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-            defaultValue="111111"
-          />
-        </Form.Item>
-        <Form.Item
-          name="confirmationPassword"
-          label="Confirm your password"
-          dependencies={["password"]}
-          rules={[
-            { required: true, message: "Please confirm your password" },
-            validatePasswordConfirmation,
-          ]}
-        >
-          <Input.Password
-            placeholder="Confirm your password"
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
@@ -90,10 +65,10 @@ const SignUpForm: React.FC = () => {
       </Form>
 
       <Text style={{ fontWeight: 300, textAlign: "center" }}>
-        Already have an account? <GreenLink href="/sign-in">Login</GreenLink>
+        Don't have an account? <GreenLink href="/sign-up">Register</GreenLink>
       </Text>
-    </SignUpFormContainer>
+    </SignInFormContainer>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;
