@@ -6,7 +6,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const AuthLayout = ({ children }: LayoutProps) => {
   return (
     <LayoutContainer>
       <Header variant="transparent" />
@@ -15,4 +15,4 @@ const Layout = ({ children }: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default AuthLayout;

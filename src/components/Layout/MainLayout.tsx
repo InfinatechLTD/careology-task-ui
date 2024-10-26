@@ -6,7 +6,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const MainLayout = ({ children }: LayoutProps) => {
   return (
     <LayoutContainer>
       <Header variant="inverse" />
@@ -15,4 +15,4 @@ const Layout = ({ children }: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default MainLayout;
