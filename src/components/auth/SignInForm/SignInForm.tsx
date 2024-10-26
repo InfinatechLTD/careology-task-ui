@@ -20,6 +20,7 @@ const SignInForm: React.FC = () => {
 
       <Form<SignInFormValues>
         form={form}
+        initialValues={{ email: "test@test.com", password: "1111111" }}
         name="login"
         layout="vertical"
         onFinish={onFinish}
@@ -33,7 +34,7 @@ const SignInForm: React.FC = () => {
             { type: "email", message: "Please enter a valid email" },
           ]}
         >
-          <Input placeholder="yours@example.com" defaultValue="test@test.com" />
+          <Input placeholder="yours@example.com" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -45,7 +46,6 @@ const SignInForm: React.FC = () => {
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
             }
-            defaultValue="111111"
           />
         </Form.Item>
         <div

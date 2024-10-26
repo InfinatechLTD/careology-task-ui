@@ -3,19 +3,19 @@ import styled from "@emotion/styled";
 export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-self: center;
   background-color: #fffefc;
+  min-width: 100%;
+  justify-content: center;
 `;
 
 export const LayoutMain = styled.main`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 16px;
   margin: 0 auto;
-  max-width: 800px;
-  width: 100%;
-  flex-grow: 1;
-  margin: 0;
-  padding: 0;
+  max-width: 1240px;
+  width: 1240px;
+  padding: 16px;
 `;

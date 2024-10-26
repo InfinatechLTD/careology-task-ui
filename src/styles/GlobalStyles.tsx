@@ -48,6 +48,15 @@ const GlobalStyles = () => (
         margin-top: 0px; !important;
       }
 
+      h2.ant-typography {
+        font-family: inherit;
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0px;
+        margin-top: 0px; !important;
+      }
+
       span.ant-typography {
         font-family: inherit;
         font-size: 16px;

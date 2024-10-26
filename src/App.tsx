@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import { ConfigProvider } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "./features/auth/authSlice";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
-import HomePage from "./pages/HomePage";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import GlobalStyles from "./styles/GlobalStyles";
+import TasksPage from "./pages/TasksPage";
+import { RootState } from "./store/store";
 
 function App() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true);
+
+  // const navigate = useNavigate();
+
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Rehydrate token from localStorage on app load
   useEffect(() => {
@@ -19,12 +29,17 @@ function App() {
     if (token) {
       dispatch(setToken(token));
     }
-    setLoading(false); // Mark the loading state as complete
+    setLoading(false);
   }, [dispatch]);
 
-  // If loading, show a spinner or a loading screen
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/sign-in");
+  //   }
+  // }, [token, navigate]);
+
   if (loading) {
-    return <div>Loading...</div>; // Replace this with your loading indicator
+    return <div>Loading...</div>;
   }
 
   return (
@@ -35,7 +50,7 @@ function App() {
           <Routes>
             {/* Protected Routes for authenticated users */}
             <Route element={<ProtectedRoutes />}>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<TasksPage />} />
             </Route>
 
             <Route path="/sign-up" element={<SignUpPage />} />
