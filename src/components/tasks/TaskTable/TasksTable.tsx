@@ -6,8 +6,14 @@ import {
   Select,
   Tag,
   DatePicker,
+  Space,
 } from "antd";
-import { PlusOutlined, SaveOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  SaveOutlined,
+  EditOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 import { useTasksTable } from "./useTasksTable";
 import { TaskTableContainer } from "./TasksTable.styles";
 import dayjs, { Dayjs } from "dayjs";
@@ -19,7 +25,6 @@ const formatDate = (date: Dayjs | null): string => {
   return date ? date.format("YYYY-MM-DD") : "";
 };
 
-// Function to parse 'YYYY-MM-DD' string to dayjs object
 const parseDate = (dateString: string): Dayjs | null => {
   return dateString ? dayjs(dateString) : null;
 };
@@ -33,7 +38,11 @@ const TasksTable: React.FC = () => {
     handleAddNewTask,
     handleInputChange,
     handleSave,
+    handleEditTask,
+    handleCancelEdit,
   } = useTasksTable();
+
+  const isEditing = (record: any) => record.id === editingKey;
 
   const columns = [
     {
@@ -41,7 +50,7 @@ const TasksTable: React.FC = () => {
       dataIndex: "name",
       key: "name",
       render: (_: any, record: any) =>
-        editingKey === record.id ? (
+        isEditing(record) ? (
           <Input
             value={newTask?.name || ""}
             onChange={(e) => handleInputChange("name", e.target.value)}
@@ -55,7 +64,7 @@ const TasksTable: React.FC = () => {
       dataIndex: "dueDate",
       key: "dueDate",
       render: (_: any, record: any) =>
-        editingKey === record.id ? (
+        isEditing(record) ? (
           <DatePicker
             value={newTask?.dueDate ? parseDate(newTask.dueDate) : null}
             onChange={(date) =>
@@ -72,7 +81,7 @@ const TasksTable: React.FC = () => {
       dataIndex: "tag",
       key: "tag",
       render: (_: any, record: any) =>
-        editingKey === record.id ? (
+        isEditing(record) ? (
           <Select
             value={newTask?.tag || "Not Urgent"}
             onChange={(value) => handleInputChange("tag", value)}
@@ -80,18 +89,18 @@ const TasksTable: React.FC = () => {
             <Option value="Urgent">Urgent</Option>
             <Option value="Not Urgent">Not Urgent</Option>
           </Select>
-        ) : record.tag ? (
+        ) : (
           <Tag color={record.tag === "Urgent" ? "red" : "gray"}>
             {record.tag}
           </Tag>
-        ) : null,
+        ),
     },
     {
       title: "Note",
       dataIndex: "note",
       key: "note",
       render: (_: any, record: any) =>
-        editingKey === record.id ? (
+        isEditing(record) ? (
           <Input
             value={newTask?.note || ""}
             onChange={(e) => handleInputChange("note", e.target.value)}
@@ -103,12 +112,24 @@ const TasksTable: React.FC = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: any) =>
-        editingKey === record.id ? (
-          <Button icon={<SaveOutlined />} type="primary" onClick={handleSave}>
-            Save
-          </Button>
-        ) : null,
+      render: (_: any, record: any) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <Space>
+            <Button icon={<SaveOutlined />} type="primary" onClick={handleSave}>
+              Save
+            </Button>
+            <Button icon={<CloseOutlined />} onClick={handleCancelEdit}>
+              Cancel
+            </Button>
+          </Space>
+        ) : (
+          <Button
+            icon={<EditOutlined />}
+            onClick={() => handleEditTask(record)}
+          ></Button>
+        );
+      },
     },
   ];
 

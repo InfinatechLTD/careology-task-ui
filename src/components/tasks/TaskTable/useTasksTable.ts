@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
   useAddTaskMutation,
   useGetTasksQuery,
+  useUpdateTaskMutation,
 } from "../../../features/tasks/tasksApi";
 
 interface Task {
@@ -15,7 +16,11 @@ interface Task {
 
 export const useTasksTable = () => {
   const { data = { tasks: [] }, isLoading } = useGetTasksQuery(undefined);
+
+  // To do: Add error handling and loading if time allows
   const [addTask] = useAddTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
+
   const [tableData, setTableData] = useState<Task[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [newTask, setNewTask] = useState<Partial<Task> | null>(null);
@@ -47,15 +52,36 @@ export const useTasksTable = () => {
     }));
   };
 
+  const handleEditTask = (task: Task) => {
+    setEditingKey(task.id);
+    setNewTask({ ...task });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingKey(null);
+    setNewTask(null);
+  };
+
   const handleSave = async () => {
     if (newTask) {
       try {
-        const savedTask = await addTask(newTask as Task).unwrap();
-        setTableData((prevData) =>
-          prevData.map((task) =>
-            task.id === "" ? { ...savedTask.task } : task
-          )
-        );
+        if (!newTask.id) {
+          const savedTask = await addTask(newTask as Task).unwrap();
+          setTableData((prevData) =>
+            prevData.map((task) => (task.id === "" ? { ...savedTask } : task))
+          );
+        } else {
+          const { task: updatedTask } = await updateTask(
+            newTask as Task
+          ).unwrap();
+
+          setTableData((prevData) =>
+            prevData.map((task) =>
+              task.id === updatedTask.id ? updatedTask : task
+            )
+          );
+        }
+
         setNewTask(null);
         setEditingKey(null);
       } catch (error) {
@@ -71,6 +97,8 @@ export const useTasksTable = () => {
     isLoading,
     handleAddNewTask,
     handleInputChange,
+    handleEditTask,
+    handleCancelEdit,
     handleSave,
   };
 };

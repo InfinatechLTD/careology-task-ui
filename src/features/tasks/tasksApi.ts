@@ -8,8 +8,6 @@ export const tasksApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
 
-      console.log("token111", token);
-
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -20,7 +18,6 @@ export const tasksApi = createApi({
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: () => {
-        console.log("making request to tasks");
         return "/tasks";
       },
     }),
@@ -31,7 +28,15 @@ export const tasksApi = createApi({
         body: newTask,
       }),
     }),
+    updateTask: builder.mutation({
+      query: (updatedTask) => ({
+        url: `/tasks/${updatedTask.id}`,
+        method: "PUT",
+        body: updatedTask,
+      }),
+    }),
   }),
 });
 
-export const { useGetTasksQuery, useAddTaskMutation } = tasksApi;
+export const { useGetTasksQuery, useAddTaskMutation, useUpdateTaskMutation } =
+  tasksApi;

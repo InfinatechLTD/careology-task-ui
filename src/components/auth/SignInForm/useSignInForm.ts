@@ -11,14 +11,12 @@ const useSignInForm = () => {
   // Handle success and navigate to login page
   useEffect(() => {
     if (isSuccess) {
-      console.log("User has been registered successfully!");
       navigate("/");
     }
   }, [isSuccess, navigate]);
 
   const onFinish = async (values: SignInFormValues) => {
     try {
-      console.log(values);
       await loginUser(values).unwrap();
     } catch (error) {
       console.error(error);

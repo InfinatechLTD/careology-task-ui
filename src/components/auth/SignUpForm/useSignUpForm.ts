@@ -13,14 +13,12 @@ const useSignUpForm = () => {
   // Handle success and navigate to login page
   useEffect(() => {
     if (isSuccess) {
-      console.log("User has been registered successfully!");
       navigate("/sign-in"); // Navigate to login page
     }
   }, [isSuccess, navigate]);
 
   const onFinish = async (values: SignUpFormValues) => {
     try {
-      console.log(values);
       await registerUser(values).unwrap();
     } catch (error) {
       console.error(error);

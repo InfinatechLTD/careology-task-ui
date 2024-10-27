@@ -6,7 +6,6 @@ import { RootState } from "../../store/store";
 const ProtectedRoutes: React.FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);
 
-  console.log("ProtectedRoutes token:", token);
   if (!token) {
     return <Navigate to="/sign-in" />;
   }
