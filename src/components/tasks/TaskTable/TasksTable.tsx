@@ -1,9 +1,28 @@
-import { Table, Button, Typography, Input } from "antd";
+import {
+  Table,
+  Button,
+  Typography,
+  Input,
+  Select,
+  Tag,
+  DatePicker,
+} from "antd";
 import { PlusOutlined, SaveOutlined } from "@ant-design/icons";
 import { useTasksTable } from "./useTasksTable";
 import { TaskTableContainer } from "./TasksTable.styles";
+import dayjs, { Dayjs } from "dayjs";
 
 const { Title } = Typography;
+const { Option } = Select;
+
+const formatDate = (date: Dayjs | null): string => {
+  return date ? date.format("YYYY-MM-DD") : "";
+};
+
+// Function to parse 'YYYY-MM-DD' string to dayjs object
+const parseDate = (dateString: string): Dayjs | null => {
+  return dateString ? dayjs(dateString) : null;
+};
 
 const TasksTable: React.FC = () => {
   const {
@@ -37,13 +56,35 @@ const TasksTable: React.FC = () => {
       key: "dueDate",
       render: (_: any, record: any) =>
         editingKey === record.id ? (
-          <Input
-            value={newTask?.dueDate || ""}
-            onChange={(e) => handleInputChange("dueDate", e.target.value)}
+          <DatePicker
+            value={newTask?.dueDate ? parseDate(newTask.dueDate) : null}
+            onChange={(date) =>
+              handleInputChange("dueDate", date ? formatDate(date) : null)
+            }
+            format="YYYY-MM-DD"
           />
         ) : (
           record.dueDate
         ),
+    },
+    {
+      title: "Tag",
+      dataIndex: "tag",
+      key: "tag",
+      render: (_: any, record: any) =>
+        editingKey === record.id ? (
+          <Select
+            value={newTask?.tag || "Not Urgent"}
+            onChange={(value) => handleInputChange("tag", value)}
+          >
+            <Option value="Urgent">Urgent</Option>
+            <Option value="Not Urgent">Not Urgent</Option>
+          </Select>
+        ) : record.tag ? (
+          <Tag color={record.tag === "Urgent" ? "red" : "gray"}>
+            {record.tag}
+          </Tag>
+        ) : null,
     },
     {
       title: "Note",
