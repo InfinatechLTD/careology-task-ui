@@ -13,6 +13,7 @@ import {
   SaveOutlined,
   EditOutlined,
   CloseOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import { useTasksTable } from "./useTasksTable";
 import { TaskTableContainer } from "./TasksTable.styles";
@@ -40,6 +41,7 @@ const TasksTable: React.FC = () => {
     handleSave,
     handleEditTask,
     handleCancelEdit,
+    handleDeleteTask,
   } = useTasksTable();
 
   const isEditing = (record: any) => record.id === editingKey;
@@ -63,6 +65,7 @@ const TasksTable: React.FC = () => {
       title: "Due Date",
       dataIndex: "dueDate",
       key: "dueDate",
+      width: 150,
       render: (_: any, record: any) =>
         isEditing(record) ? (
           <DatePicker
@@ -112,6 +115,7 @@ const TasksTable: React.FC = () => {
     {
       title: "Actions",
       key: "actions",
+      width: 100,
       render: (_: any, record: any) => {
         const editable = isEditing(record);
         return editable ? (
@@ -124,10 +128,17 @@ const TasksTable: React.FC = () => {
             </Button>
           </Space>
         ) : (
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => handleEditTask(record)}
-          ></Button>
+          <Space>
+            <Button
+              icon={<EditOutlined />}
+              onClick={() => handleEditTask(record)}
+            ></Button>
+            <Button
+              icon={<DeleteOutlined />}
+              danger
+              onClick={() => handleDeleteTask(record)}
+            />
+          </Space>
         );
       },
     },

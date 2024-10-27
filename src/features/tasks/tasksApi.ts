@@ -35,8 +35,18 @@ export const tasksApi = createApi({
         body: updatedTask,
       }),
     }),
+    deleteTask: builder.mutation({
+      query: (deleteTask) => ({
+        url: `/tasks/${deleteTask.id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useGetTasksQuery, useAddTaskMutation, useUpdateTaskMutation } =
-  tasksApi;
+export const {
+  useGetTasksQuery,
+  useAddTaskMutation,
+  useUpdateTaskMutation,
+  useDeleteTaskMutation,
+} = tasksApi;

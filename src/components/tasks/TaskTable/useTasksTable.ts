@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   useAddTaskMutation,
+  useDeleteTaskMutation,
   useGetTasksQuery,
   useUpdateTaskMutation,
 } from "../../../features/tasks/tasksApi";
@@ -20,6 +21,7 @@ export const useTasksTable = () => {
   // To do: Add error handling and loading if time allows
   const [addTask] = useAddTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
   const [tableData, setTableData] = useState<Task[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
@@ -90,6 +92,19 @@ export const useTasksTable = () => {
     }
   };
 
+  const handleDeleteTask = async (deleteToTask: Task) => {
+    try {
+      console.log("task", deleteToTask.id);
+      await deleteTask(deleteToTask).unwrap();
+      console.log("deleting task", deleteToTask.id);
+      setTableData((prevData) =>
+        prevData.filter((task) => task.id !== deleteToTask.id)
+      );
+    } catch (error) {
+      console.error("Failed to delete task", error);
+    }
+  };
+
   return {
     tableData,
     editingKey,
@@ -100,5 +115,6 @@ export const useTasksTable = () => {
     handleEditTask,
     handleCancelEdit,
     handleSave,
+    handleDeleteTask,
   };
 };
