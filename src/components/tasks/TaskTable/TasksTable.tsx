@@ -7,6 +7,7 @@ import {
   Tag,
   DatePicker,
   Space,
+  Checkbox,
 } from "antd";
 import {
   PlusOutlined,
@@ -42,11 +43,24 @@ const TasksTable: React.FC = () => {
     handleEditTask,
     handleCancelEdit,
     handleDeleteTask,
+    handleToggleTaskCompleted,
   } = useTasksTable();
 
   const isEditing = (record: any) => record.id === editingKey;
 
   const columns = [
+    {
+      title: "",
+      dataIndex: "completed",
+      key: "completed",
+      width: 10,
+      render: (_: any, record: any) => (
+        <Checkbox
+          checked={record.completed}
+          onChange={() => handleToggleTaskCompleted(record)}
+        />
+      ),
+    },
     {
       title: "Name",
       dataIndex: "name",

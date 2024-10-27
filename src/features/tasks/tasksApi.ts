@@ -41,6 +41,13 @@ export const tasksApi = createApi({
         method: "DELETE",
       }),
     }),
+    toggleTask: builder.mutation({
+      query: (task) => ({
+        url: `/tasks/${task.id}`,
+        method: "PATCH",
+        body: { completed: task.completed },
+      }),
+    }),
   }),
 });
 
@@ -49,4 +56,5 @@ export const {
   useAddTaskMutation,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
+  useToggleTaskMutation,
 } = tasksApi;

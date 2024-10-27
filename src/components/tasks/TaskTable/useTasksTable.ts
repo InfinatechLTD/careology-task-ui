@@ -3,6 +3,7 @@ import {
   useAddTaskMutation,
   useDeleteTaskMutation,
   useGetTasksQuery,
+  useToggleTaskMutation,
   useUpdateTaskMutation,
 } from "../../../features/tasks/tasksApi";
 
@@ -22,6 +23,7 @@ export const useTasksTable = () => {
   const [addTask] = useAddTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
+  const [toggleTask] = useToggleTaskMutation();
 
   const [tableData, setTableData] = useState<Task[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
@@ -94,14 +96,30 @@ export const useTasksTable = () => {
 
   const handleDeleteTask = async (deleteToTask: Task) => {
     try {
-      console.log("task", deleteToTask.id);
       await deleteTask(deleteToTask).unwrap();
-      console.log("deleting task", deleteToTask.id);
       setTableData((prevData) =>
         prevData.filter((task) => task.id !== deleteToTask.id)
       );
     } catch (error) {
       console.error("Failed to delete task", error);
+    }
+  };
+
+  const handleToggleTaskCompleted = async (taskToToggle: Task) => {
+    try {
+      const updatedTask = {
+        ...taskToToggle,
+        completed: !taskToToggle.completed,
+      };
+
+      await toggleTask(updatedTask).unwrap();
+      setTableData((prevData) =>
+        prevData.map((task) =>
+          task.id === taskToToggle.id ? updatedTask : task
+        )
+      );
+    } catch (error) {
+      console.error("Failed to toggle task", error);
     }
   };
 
@@ -116,5 +134,6 @@ export const useTasksTable = () => {
     handleCancelEdit,
     handleSave,
     handleDeleteTask,
+    handleToggleTaskCompleted,
   };
 };
