@@ -11,11 +11,11 @@ export const LayoutContainer = styled.div`
 
 export const LayoutMain = styled.main`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 16px 0px;
   margin: 0 auto;
   max-width: 1240px;
-  width: 1240px;
-  padding: 16px;
+  width: 100%;
 `;

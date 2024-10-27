@@ -19,10 +19,6 @@ function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  // const navigate = useNavigate();
-
-  const token = useSelector((state: RootState) => state.auth.token);
-
   // Rehydrate token from localStorage on app load
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -31,12 +27,6 @@ function App() {
     }
     setLoading(false);
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate("/sign-in");
-  //   }
-  // }, [token, navigate]);
 
   if (loading) {
     return <div>Loading...</div>;

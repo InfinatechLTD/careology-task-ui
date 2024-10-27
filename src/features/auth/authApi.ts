@@ -40,6 +40,8 @@ export const authApi = createApi({
 
           if (rememberMe) {
             localStorage.setItem("token", token);
+          } else {
+            sessionStorage.removeItem("token");
           }
 
           return { data: user };
