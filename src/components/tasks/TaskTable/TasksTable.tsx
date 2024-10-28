@@ -105,6 +105,7 @@ const TasksTable: React.FC = () => {
       title: "Tag",
       dataIndex: "tag",
       key: "tag",
+      width: 150,
       render: (_: any, record: any) =>
         isEditing(record) ? (
           <Select

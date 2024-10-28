@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ConfigProvider } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setToken } from "./features/auth/authSlice";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import GlobalStyles from "./styles/GlobalStyles";
 import TasksPage from "./pages/TasksPage";
-import { RootState } from "./store/store";
 
 function App() {
   const dispatch = useDispatch();

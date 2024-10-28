@@ -26,15 +26,6 @@ const GlobalStyles = () => (
         color: #333;
       }
 
-      h3.ant-typography {
-        font-family: inherit;
-        font-size: 24px;
-        font-weight: 300;
-        color: #333;
-        margin-bottom: 16px;
-        margin-top: 0;
-      }
-
       .ant-typography + h2.ant-typography {
         margin-top: 0px;
       }
@@ -48,13 +39,13 @@ const GlobalStyles = () => (
         margin-top: 0px; !important;
       }
 
-      h3.ant-typography {
+       h3.ant-typography {
         font-family: inherit;
-        font-size: 28px;
-        font-weight: 700;
+        font-size: 24px;
+        font-weight: 300;
         color: #333;
-        margin-bottom: 0px;
-        margin-top: 0px; !important;
+        margin-bottom: 16px;
+        margin-top: 0;
       }
 
       h4.ant-typography {
@@ -64,6 +55,15 @@ const GlobalStyles = () => (
         color: #333;
         margin-bottom: 16px;
         margin-top: 32px; 
+      }
+
+       h5.ant-typography {
+        font-family: inherit;
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0px;
+        margin-top: 0px; !important;
       }
 
       span.ant-typography {
