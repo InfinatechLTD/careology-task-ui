@@ -18,4 +18,9 @@ export const LayoutMain = styled.main`
   margin: 0 auto;
   max-width: 1240px;
   width: 100%;
+
+  @media (max-width: 1240px) {
+    box-sizing: border-box;
+    padding: 0 32px;
+  }
 `;

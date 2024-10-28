@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   useAddTaskMutation,
   useDeleteTaskMutation,
@@ -23,17 +23,29 @@ export const useTasksTable = () => {
   const [addTask] = useAddTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
-  const [toggleTask] = useToggleTaskMutation();
+  const [toggleTask, { isLoading: isToggleLoading }] = useToggleTaskMutation();
 
   const [tableData, setTableData] = useState<Task[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
   const [newTask, setNewTask] = useState<Partial<Task> | null>(null);
+  const [toggleTaskId, setToggleTaskId] = useState<string | null>(null);
 
+  // Sync table data when tasks data changes
   useEffect(() => {
     if (data.tasks.length > 0) {
       setTableData(data.tasks);
     }
-  }, [data.tasks]);
+  }, [data]);
+
+  const outstandingTaskTableData = useMemo(
+    () => tableData.filter((task) => !task.completed),
+    [tableData]
+  );
+
+  const completedTasksTableData = useMemo(
+    () => tableData.filter((task) => task.completed),
+    [tableData]
+  );
 
   const handleAddNewTask = () => {
     const emptyTask: Task = {
@@ -62,6 +74,11 @@ export const useTasksTable = () => {
   };
 
   const handleCancelEdit = () => {
+    if (!newTask?.id) {
+      // If the task doesn't have an ID, it's not saved yet, so remove it from the table
+      setTableData((prevData) => prevData.filter((task) => task.id !== ""));
+    }
+
     setEditingKey(null);
     setNewTask(null);
   };
@@ -70,11 +87,13 @@ export const useTasksTable = () => {
     if (newTask) {
       try {
         if (!newTask.id) {
+          // Add new task
           const savedTask = await addTask(newTask as Task).unwrap();
           setTableData((prevData) =>
             prevData.map((task) => (task.id === "" ? { ...savedTask } : task))
           );
         } else {
+          // Update existing task
           const { task: updatedTask } = await updateTask(
             newTask as Task
           ).unwrap();
@@ -107,27 +126,34 @@ export const useTasksTable = () => {
 
   const handleToggleTaskCompleted = async (taskToToggle: Task) => {
     try {
+      setToggleTaskId(taskToToggle.id);
       const updatedTask = {
         ...taskToToggle,
         completed: !taskToToggle.completed,
       };
 
       await toggleTask(updatedTask).unwrap();
+
       setTableData((prevData) =>
         prevData.map((task) =>
-          task.id === taskToToggle.id ? updatedTask : task
+          task.id === updatedTask.id ? updatedTask : task
         )
       );
     } catch (error) {
       console.error("Failed to toggle task", error);
+    } finally {
+      setToggleTaskId(null);
     }
   };
 
   return {
-    tableData,
+    outstandingTaskTableData,
+    completedTasksTableData,
     editingKey,
     newTask,
     isLoading,
+    toggleTaskId,
+    isToggleLoading,
     handleAddNewTask,
     handleInputChange,
     handleEditTask,

@@ -63,7 +63,7 @@ const GlobalStyles = () => (
         font-weight: 700;
         color: #333;
         margin-bottom: 16px;
-        margin-top: 0px; !important;
+        margin-top: 32px; 
       }
 
       span.ant-typography {

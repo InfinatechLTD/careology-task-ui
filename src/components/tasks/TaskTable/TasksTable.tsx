@@ -8,6 +8,7 @@ import {
   DatePicker,
   Space,
   Checkbox,
+  Spin,
 } from "antd";
 import {
   PlusOutlined,
@@ -33,10 +34,13 @@ const parseDate = (dateString: string): Dayjs | null => {
 
 const TasksTable: React.FC = () => {
   const {
-    tableData,
+    outstandingTaskTableData,
+    completedTasksTableData,
     editingKey,
     newTask,
     isLoading,
+    toggleTaskId,
+    isToggleLoading,
     handleAddNewTask,
     handleInputChange,
     handleSave,
@@ -54,12 +58,16 @@ const TasksTable: React.FC = () => {
       dataIndex: "completed",
       key: "completed",
       width: 10,
-      render: (_: any, record: any) => (
-        <Checkbox
-          checked={record.completed}
-          onChange={() => handleToggleTaskCompleted(record)}
-        />
-      ),
+      render: (_: any, record: any) => {
+        return isToggleLoading && toggleTaskId === record.id ? (
+          <Spin size="small" />
+        ) : (
+          <Checkbox
+            checked={record.completed}
+            onChange={() => handleToggleTaskCompleted(record)}
+          />
+        );
+      },
     },
     {
       title: "Name",
@@ -160,12 +168,7 @@ const TasksTable: React.FC = () => {
 
   return (
     <TaskTableContainer>
-      <Button
-        type="primary"
-        onClick={handleAddNewTask}
-        icon={<PlusOutlined />}
-        style={{ marginBottom: "32px" }}
-      >
+      <Button type="primary" onClick={handleAddNewTask} icon={<PlusOutlined />}>
         Add Task
       </Button>
 
@@ -173,7 +176,22 @@ const TasksTable: React.FC = () => {
 
       <Table
         columns={columns}
-        dataSource={tableData}
+        dataSource={outstandingTaskTableData}
+        rowKey="id"
+        loading={isLoading}
+        pagination={false}
+        style={{
+          borderRadius: "8px",
+          overflow: "hidden",
+          border: "1px solid #f0f0f0",
+        }}
+      />
+
+      <Title level={4}>Completed tasks</Title>
+
+      <Table
+        columns={columns}
+        dataSource={completedTasksTableData}
         rowKey="id"
         loading={isLoading}
         pagination={false}
