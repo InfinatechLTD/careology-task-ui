@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:latest
+FROM node:latest as build
 
 # Set working directory
 WORKDIR /src
