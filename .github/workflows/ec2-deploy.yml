@@ -1,0 +1,34 @@
+name: Deploy Careology UI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Create .env file
+        run: echo "REACT_APP_TASK_API_URL=13.40.106.188" >> .env
+      - name: Login to docker hub
+        run: echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Build docker image
+        run: docker build -t dudedolf/careology-task-ui:latest .
+      - name: Publish image to docker hub
+        run: docker push dudedolf/careology-task-ui:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Login to docker hub
+        run: echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Pull image from docker hub
+        run: docker pull dudedolf/careology-task-ui:latest
+      - name: Delete old container
+        run: docker rm -f careology-task-ui-container || true
+      - name: Run docker container
+        run: docker run -d -p 80:80 -e PORT=80 --name careology-task-ui-container dudedolf/careology-task-ui
