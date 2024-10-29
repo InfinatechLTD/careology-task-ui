@@ -34,11 +34,11 @@ function App() {
           <Routes>
             {/* Protected Routes for authenticated users */}
             <Route element={<ProtectedRoutes />}>
-              <Route path="/" element={<TasksPage />} />
+              <Route path="/" element={<div>Hello</div>} />
             </Route>
 
-            <Route path="/sign-up" element={<SignUpPage />} />
-            <Route path="/sign-in" element={<SignInPage />} />
+            {/* <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/sign-in" element={<SignInPage />} /> */}
           </Routes>
         </Router>
       </ConfigProvider>
