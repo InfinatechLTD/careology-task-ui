@@ -45,7 +45,7 @@ No time, but perhaps using the [React DnD](https://react-dnd.github.io/react-dnd
 
 > Responsive Layout
 
-I did not have time to do this, but would have used media queries if I wanted to build a custom vanilla solution. Otherwise Ant Desgin's Grid system would be a good out of the box solution.
+I did not have time to do this, but would have used media queries if I wanted to build a custom vanilla solution. Otherwise Ant Design's Grid system would be a good out of the box solution.
 
 ## Things I Would Have Liked to Have Done
 
