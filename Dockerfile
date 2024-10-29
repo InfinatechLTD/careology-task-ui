@@ -13,8 +13,14 @@ RUN npm ci --only=production
 # Copy the rest of the app source code
 COPY . .
 
-# Build the app
-RUN npm run build
+# Disable source map generation for production to reduce CPU load
+ENV GENERATE_SOURCEMAP=false
+
+# Set Node.js memory limit (512MB to match t2.micro memory)
+ENV NODE_OPTIONS=--max-old-space-size=512
+
+# Reduce CPU priority using 'nice' to prevent high CPU spikes
+RUN nice -n 19 npm run build
 
 # Stage 2: Serve the app using a lightweight web server
 FROM nginx:alpine
