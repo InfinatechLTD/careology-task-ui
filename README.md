@@ -17,6 +17,7 @@ Below I will detail the elements that were both completed and not completed:
 - [ ] If a new task contains a city name in it
 - [ ] Add snack bars
 - [ ] Implement drag and drop
+- [ ] Responsive Layout
 
 ## Requirements Not Completed
 
@@ -41,6 +42,10 @@ Again, no time, but if I were to do this I would have used the [antd notificatio
 > Implement drag and drop
 
 No time, but perhaps using the [React DnD](https://react-dnd.github.io/react-dnd/about) library may help.
+
+> Responsive Layout
+
+I did not have time to do this, but would have used media queries
 
 ## Things I Would Have Liked to Have Done
 
