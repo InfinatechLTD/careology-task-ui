@@ -13,7 +13,8 @@ Below I will detail the elements that were both completed and not completed:
 - [x] Ability to delete a task
 - [x] Ability to mark/check a task as done
 - [x] Make your app available online (send us the link to it).
-- [x] Add due date / tags / search
+- [x] Add due date / tags
+- [ ] Add search
 - [ ] If a new task contains a city name in it
 - [ ] Add snack bars
 - [ ] Implement drag and drop
@@ -46,6 +47,10 @@ No time, but perhaps using the [React DnD](https://react-dnd.github.io/react-dnd
 > Responsive Layout
 
 I did not have time to do this, but would have used media queries if I wanted to build a custom vanilla solution. Otherwise Ant Design's Grid system would be a good out of the box solution.
+
+> Add search
+
+The initial implementation will use a full-text search on local data, which should be fairly efficient as the number of tasks in view is expected to remain low. However, as the system grows and the number of tasks increases, we could consider searching the database instead. If the task volume becomes very large, implementing technologies like Elasticsearch could be a solution.
 
 ## Things I Would Have Liked to Have Done
 
