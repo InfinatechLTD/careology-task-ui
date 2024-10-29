@@ -15,11 +15,11 @@ function App() {
 
   // Rehydrate token from localStorage on app load
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(setToken(token));
-    }
-    setLoading(false);
+    // const token = localStorage.getItem("token");
+    // if (token) {
+    //   dispatch(setToken(token));
+    // }
+    // setLoading(false);
   }, [dispatch]);
 
   if (loading) {
