@@ -38,4 +38,4 @@ jobs:
           heroku git:remote -a $HEROKU_APP_NAME
           git add .
           git commit -m "GitHub Actions deploy"
-          git push heroku `git subtree split --prefix build main`:refs/heads/main --force
+          git push heroku main
