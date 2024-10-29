@@ -88,7 +88,7 @@ export const useTasksTable = () => {
       try {
         if (!newTask.id) {
           // Add new task
-          const savedTask = await addTask(newTask as Task).unwrap();
+          const { task: savedTask } = await addTask(newTask as Task).unwrap();
           setTableData((prevData) =>
             prevData.map((task) => (task.id === "" ? { ...savedTask } : task))
           );

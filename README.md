@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+# Careology Task UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the ui code for the technical task. The ui has been written in React and has used Ant design for the component library and emotion for the styling.
 
-## Available Scripts
+## Coding Task Requirements
 
-In the project directory, you can run:
+Below I will detail the elements that were both completed and not completed:
 
-### `npm start`
+- [x] Login / Register screen(s)
+- [x] Ability to logout
+- [x] Ability to add task
+- [x] Ability to edit task
+- [x] Ability to delete task
+- [x] Ability to mark/check task as done
+- [ ] If a new task contains a city name in it
+- [ ] Neptune
+- [ ] Comet Haley
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Requirements not completed
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+> If a new task contains a city name in it (use first occurrence of city name)then use an external API to show the weather for this city on the task card using weather.com API. Swagger Link. API
 
-### `npm test`
+I am sorry, but time to not allow me to complete this task. However, I think I would have done it in the following way.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Task is created in the UI
+2. Request made to backend
+3. On success of the request, parse the text for a city name, perhaps using an LLM read the text, or use and NLP library like [compromise](https://www.npmjs.com/package/compromise) to analyse the text and return a city if it find one
+4. If a city is found, make a request to the backend to add the weather to the task with an API request like `POST /tasks/id/weather-note`
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+We could do this on the backend but it could potentially cause the request to be slow.
