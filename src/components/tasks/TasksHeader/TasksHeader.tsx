@@ -1,5 +1,5 @@
 import { Button, Input, Typography } from "antd";
-import { TaskHeaderContainer } from "./TaskHeader.style";
+import { TaskHeaderContainer } from "./TaskHeader.styles";
 import { SearchOutlined, LockOutlined } from "@ant-design/icons";
 import useTaskHeader from "./useTaskHeader";
 
