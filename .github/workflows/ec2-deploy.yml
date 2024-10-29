@@ -14,7 +14,6 @@ jobs:
       - name: Test sudo permissions and echo user
         run: |
           whoami
-          sudo echo "Has sudo permissions"
       - name: Create .env file
         run: |
           sudo touch .env
