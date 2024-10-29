@@ -16,9 +16,9 @@ jobs:
       - name: Login to docker hub
         run: echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | sudo docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Build docker image
-        run: docker build -t dudedolf/careology-task-ui:latest .
+        run: sudo docker build -t dudedolf/careology-task-ui:latest .
       - name: Publish image to docker hub
-        run: docker push dudedolf/careology-task-ui:latest
+        run: sudo docker push dudedolf/careology-task-ui:latest
 
   deploy:
     needs: build
@@ -27,8 +27,8 @@ jobs:
       - name: Login to docker hub
         run: echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: Pull image from docker hub
-        run: docker pull dudedolf/careology-task-ui:latest
+        run: sudo docker pull dudedolf/careology-task-ui:latest
       - name: Delete old container
-        run: docker rm -f careology-task-ui-container || true
+        run: sudo docker rm -f careology-task-ui-container || true
       - name: Run docker container
-        run: docker run -d -p 80:80 -e PORT=80 --name careology-task-ui-container dudedolf/careology-task-ui
+        run: sudo docker run -d -p 80:80 -e PORT=80 --name careology-task-ui-container dudedolf/careology-task-ui
