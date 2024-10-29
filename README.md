@@ -45,7 +45,7 @@ No time, but perhaps using the [React DnD](https://react-dnd.github.io/react-dnd
 
 > Responsive Layout
 
-I did not have time to do this, but would have used media queries
+I did not have time to do this, but would have used media queries if I wanted to build a custom vanilla solution. Otherwise Ant Desgin's Grid system would be a good out of the box solution.
 
 ## Things I Would Have Liked to Have Done
 
@@ -56,7 +56,7 @@ Below are some things I would have liked to have implemented:
 - The database is running in test mode, so the database is open to all. I would naturally have closed this off in a 'real' app.
 - There is a slight bug when running locally related to the resize observer. I would have liked to have zeroed in on why this was being caused.
 - Remove, or better code, the anonymous function event handlers in the table component. This is not good for app performance. Using `useCallback` would help here.
-- Running on HTTPS.
+- Running on HTTPS!
 - Better error handling: when the API is not running or the token has expired.
 - Tests: I should really have written some tests!!! :)
 - Provided a URL and not an IP for accessing the online version.
