@@ -24,6 +24,11 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Set Git identity (for this repository)
+        run: |
+          git config user.email "rudy@infinatech.co.uk"
+          git config user.name "Rudy"
+
       - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
