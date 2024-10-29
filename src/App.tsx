@@ -9,9 +9,6 @@ import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import GlobalStyles from "./styles/GlobalStyles";
 import TasksPage from "./pages/TasksPage";
 
-if (window.location.href.includes("https")) {
-  window.location.href = window.location.href.replace("https", "http");
-}
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
